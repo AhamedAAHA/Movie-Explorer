@@ -51,10 +51,10 @@ export default function MovieDetails() {
         <Button component={Link} to="/" startIcon={<ArrowBackIcon />} sx={{ mb: 2 }} variant="contained">Back</Button>
         <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
           <Grid container spacing={3}>
-            <Grid item xs={12} sm={4} md={3}>
+            <Grid size={{ xs: 12, sm: 4, md: 3 }}>
               <Card sx={{ boxShadow: 6 }}><CardMedia component="img" image={img(movie.poster_path)} alt={movie.title} /></Card>
             </Grid>
-            <Grid item xs={12} sm={8} md={9}>
+            <Grid size={{ xs: 12, sm: 8, md: 9 }}>
               <Typography variant="h4">{movie.title}</Typography>
               {movie.tagline && <Typography color="text.secondary" fontStyle="italic">“{movie.tagline}”</Typography>}
               <Box display="flex" alignItems="center" gap={1} my={1} flexWrap="wrap">

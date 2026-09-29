@@ -31,7 +31,7 @@ export default function Login() {
       <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
         <Card sx={{ overflow: 'hidden' }}>
           <Grid container>
-            <Grid item xs={12} sm={5} sx={{
+            <Grid size={{ xs: 12, sm: 5 }} sx={{
               minHeight: 320,
               backgroundImage: `url(${ART})`,
               backgroundSize: 'cover', backgroundPosition: 'center',
@@ -43,7 +43,7 @@ export default function Login() {
                 <Typography variant="body2" color="rgba(255,255,255,0.75)">Trending, search and a voice buddy that speaks your language.</Typography>
               </Box>
             </Grid>
-            <Grid item xs={12} sm={7}>
+            <Grid size={{ xs: 12, sm: 7 }}>
               <CardContent sx={{ p: 4 }}>
                 <Typography variant="h5" gutterBottom>Movie Explorer</Typography>
                 <Tabs value={tab} onChange={(_, v) => { setTab(v); setError(''); }} sx={{ mb: 2 }}>

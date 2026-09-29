@@ -1,5 +1,5 @@
-// Poster card with a slow zoom + lift on hover. Compact mode
-// drops the text block for rails (just poster + rating pill).
+// Poster card: slow zoom on the artwork, shine sweep, glow lift.
+// Compact version is just poster + rating pill for the rails.
 import React from 'react';
 import { Card, CardMedia, CardContent, Typography, IconButton, Box, Chip } from '@mui/material';
 import { Link } from 'react-router-dom';
@@ -21,27 +21,38 @@ export default function MovieCard({ movie, compact = false }) {
   const fav = isFavorite(movie.id);
 
   return (
-    <motion.div whileHover={{ y: -6 }} transition={{ type: 'spring', stiffness: 350, damping: 22 }} style={{ height: '100%' }}>
+    <motion.div
+      whileHover={{ y: -8, scale: 1.02 }}
+      whileTap={{ scale: 0.98 }}
+      transition={{ type: 'spring', stiffness: 380, damping: 24 }}
+      style={{ height: '100%' }}
+    >
       <Card sx={{
         height: '100%', display: 'flex', flexDirection: 'column', position: 'relative', overflow: 'hidden',
-        transition: 'box-shadow .3s',
-        '&:hover': { boxShadow: (t) => t.palette.mode === 'dark' ? '0 14px 40px rgba(232,179,75,0.25)' : '0 14px 36px rgba(179,38,30,0.22)' },
+        transition: 'box-shadow .35s',
+        '&:hover': { boxShadow: (t) => t.palette.mode === 'dark' ? '0 18px 50px rgba(232,179,75,0.28)' : '0 18px 44px rgba(179,38,30,0.25)' },
       }}>
-        <IconButton aria-label="favorite" onClick={() => toggleFavorite(movie)}
-          sx={{ position: 'absolute', top: 6, right: 6, zIndex: 2, bgcolor: 'rgba(0,0,0,0.55)', '&:hover': { bgcolor: 'rgba(0,0,0,0.75)' } }}>
-          {fav ? <FavoriteIcon color="error" /> : <FavoriteBorderIcon sx={{ color: 'white' }} />}
-        </IconButton>
-        <Box sx={{ overflow: 'hidden' }}>
+        <motion.span whileTap={{ scale: 1.35 }} style={{ position: 'absolute', top: 6, right: 6, zIndex: 2 }}>
+          <IconButton aria-label="favorite" size="small" onClick={() => toggleFavorite(movie)}
+            sx={{ bgcolor: 'rgba(0,0,0,0.55)', '&:hover': { bgcolor: 'rgba(0,0,0,0.75)' } }}>
+            {fav ? <FavoriteIcon fontSize="small" color="error" /> : <FavoriteBorderIcon fontSize="small" sx={{ color: 'white' }} />}
+          </IconButton>
+        </motion.span>
+        <Box className="shine" sx={{ overflow: 'hidden', position: 'relative' }}>
           <CardMedia component={Link} to={`/movie/${movie.id}`} image={posterOf(movie)} alt={movie.title}
-            sx={{ aspectRatio: '2/3', transition: 'transform .5s ease', '&:hover': { transform: 'scale(1.06)' } }} />
+            sx={{ aspectRatio: '2/3', transition: 'transform .6s cubic-bezier(.22,1,.36,1)', '&:hover': { transform: 'scale(1.08)' } }} />
+          {/* rating pill floating on the artwork */}
+          <Box sx={{
+            position: 'absolute', left: 8, bottom: 8, display: 'flex', alignItems: 'center', gap: 0.4,
+            bgcolor: 'rgba(0,0,0,0.65)', color: '#ffd76a', borderRadius: 2, px: 1, py: 0.4, backdropFilter: 'blur(4px)',
+          }}>
+            <StarIcon sx={{ fontSize: 14 }} />
+            <Typography variant="caption" fontWeight={700}>{Number(movie.vote_average || 0).toFixed(1)}</Typography>
+          </Box>
         </Box>
         {compact ? (
-          <Box px={1} py={0.75} display="flex" alignItems="center" justifyContent="space-between">
-            <Typography variant="caption" noWrap fontWeight={600} sx={{ maxWidth: '65%' }}>{movie.title}</Typography>
-            <Box display="flex" alignItems="center" gap={0.4}>
-              <StarIcon fontSize="inherit" color="warning" />
-              <Typography variant="caption">{Number(movie.vote_average || 0).toFixed(1)}</Typography>
-            </Box>
+          <Box px={1} py={0.75}>
+            <Typography variant="caption" noWrap fontWeight={600}>{movie.title}</Typography>
           </Box>
         ) : (
           <CardContent sx={{ flexGrow: 1, py: 1.5 }}>
