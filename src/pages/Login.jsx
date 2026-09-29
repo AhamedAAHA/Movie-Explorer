@@ -2,13 +2,14 @@
 // like a popup. Backdrop is picked live from trending so it never
 // goes stale; falls back to a still while that loads.
 import React, { useEffect, useState } from 'react';
-import { Card, CardContent, Typography, TextField, Button, Alert, Tabs, Tab, Box } from '@mui/material';
+import { Card, CardContent, Typography, TextField, Button, Alert, Tabs, Tab, Box, useTheme } from '@mui/material';
 import { motion } from 'framer-motion';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { fetchTrending } from '../api/tmdb';
+import { fetchTrending, discoverMovies } from '../api/tmdb';
 
-const FALLBACK = 'https://image.tmdb.org/t/p/original/s3TBrRGB1iav7gFOCNx3H31MoES.jpg';
+const FALLBACK_DARK = 'https://image.tmdb.org/t/p/original/s3TBrRGB1iav7gFOCNx3H31MoES.jpg';
+const FALLBACK_LIGHT = 'https://image.tmdb.org/t/p/original/xOMo8BRK7PfcJv9JCnx7s5hj0PX.jpg';
 
 export default function Login() {
   const { login, register } = useAuth();
@@ -18,17 +19,26 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const [backdrop, setBackdrop] = useState(FALLBACK);
+  const [backdrop, setBackdrop] = useState(FALLBACK_DARK);
+  const theme = useTheme();
+  const light = theme.palette.mode === 'light';
 
+  // dark pulls a moody trending still, light pulls a bright animated
+  // one so the whole page feels like a matinee poster
   useEffect(() => {
-    fetchTrending(1).then((d) => {
+    const load = light
+      ? discoverMovies({ genre: '16', rating: 0, page: 1, query: '' })
+      : fetchTrending(1);
+    load.then((d) => {
       const withBg = (d.results || []).filter((m) => m.backdrop_path);
       if (withBg.length) {
         const pick = withBg[Math.floor(Math.random() * Math.min(withBg.length, 8))];
         setBackdrop(`https://image.tmdb.org/t/p/original${pick.backdrop_path}`);
+      } else {
+        setBackdrop(light ? FALLBACK_LIGHT : FALLBACK_DARK);
       }
-    }).catch(() => {});
-  }, []);
+    }).catch(() => setBackdrop(light ? FALLBACK_LIGHT : FALLBACK_DARK));
+  }, [light]);
 
   const submit = async (e) => {
     e.preventDefault(); setError('');
@@ -51,7 +61,7 @@ export default function Login() {
         position: 'absolute', inset: 0,
         background: (t) => t.palette.mode === 'dark'
           ? 'linear-gradient(180deg, rgba(5,6,10,0.55), rgba(5,6,10,0.82))'
-          : 'linear-gradient(180deg, rgba(30,20,10,0.45), rgba(30,20,10,0.72))',
+          : 'linear-gradient(180deg, rgba(250,246,239,0.55), rgba(250,246,239,0.88))',
         backdropFilter: 'blur(2px)',
       }} />
       {/* popup card */}
