@@ -16,7 +16,7 @@ export const mockMovies = [
   M(1, 'Inception', '2010-07-16', 8.4, [28, 878], 'A thief who steals secrets from dreams takes one last job.',
     '/9gk7adHYeDvHkCSEqAvQNLV5Uge.jpg', '/s3TBrRGB1iav7gFOCNx3H31MoES.jpg'),
   M(2, 'Interstellar', '2014-11-07', 8.7, [878, 18], 'Explorers travel through a wormhole in search of a new home.',
-    '/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg', '/xJHokMpbjvUTBnmOYk pole.jpg'.replace(' ', '')),
+    '/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg', '/s3TBrRGB1iav7gFOCNx3H31MoES.jpg'),
   M(3, 'The Dark Knight', '2008-07-18', 9.0, [28, 18], 'Batman faces the Joker in Gotham City.',
     '/qJ2tW6WMUDux911r6m7haRef0WH.jpg', '/nMKdUUepR0i5zn0y1T4CsSB5chy.jpg'),
   M(4, 'Dune: Part Two', '2024-03-01', 8.3, [878, 28], 'Paul Atreides unites with the Fremen for war.',

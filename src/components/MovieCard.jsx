@@ -47,12 +47,12 @@ export default function MovieCard({ movie, compact = false }) {
             bgcolor: 'rgba(0,0,0,0.65)', color: '#ffd76a', borderRadius: 2, px: 1, py: 0.4, backdropFilter: 'blur(4px)',
           }}>
             <StarIcon sx={{ fontSize: 14 }} />
-            <Typography variant="caption" fontWeight={700}>{Number(movie.vote_average || 0).toFixed(1)}</Typography>
+            <Typography variant="caption" sx={{ fontWeight: 700 }}>{Number(movie.vote_average || 0).toFixed(1)}</Typography>
           </Box>
         </Box>
         {compact ? (
-          <Box px={1} py={0.75}>
-            <Typography variant="caption" noWrap fontWeight={600}>{movie.title}</Typography>
+          <Box sx={{ px: 1, py: 0.75 }}>
+            <Typography variant="caption" noWrap sx={{ fontWeight: 600 }}>{movie.title}</Typography>
           </Box>
         ) : (
           <CardContent sx={{ flexGrow: 1, py: 1.5 }}>
@@ -60,9 +60,9 @@ export default function MovieCard({ movie, compact = false }) {
               sx={{ textDecoration: 'none', color: 'inherit', fontWeight: 600, display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
               {movie.title}
             </Typography>
-            <Box display="flex" alignItems="center" gap={1} mt={0.75}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 0.75 }}>
               <Chip label={year} size="small" variant="outlined" />
-              <Box display="flex" alignItems="center" gap={0.4}>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.4 }}>
                 <StarIcon fontSize="small" color="warning" />
                 <Typography variant="body2">{Number(movie.vote_average || 0).toFixed(1)}</Typography>
               </Box>

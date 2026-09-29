@@ -57,12 +57,12 @@ export default function Hero({ movies, loading, onTrailer }) {
       }} />
       <Box sx={{ position: 'relative', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', p: { xs: 3, md: 5 }, maxWidth: 680 }}>
         <motion.div variants={textUp} initial="hidden" animate="show" custom={0}>
-          <Box display="flex" gap={1} mb={1.5} alignItems="center">
+          <Box sx={{ display: 'flex', gap: 1, mb: 1.5, alignItems: 'center' }}>
             <Chip label="#1 Trending now" color="primary" size="small" sx={{ fontWeight: 700 }} />
             <Chip label={(m.release_date || '').slice(0, 4)} size="small" sx={{ color: '#fff', borderColor: 'rgba(255,255,255,0.4)' }} variant="outlined" />
-            <Box display="flex" alignItems="center" gap={0.5} color="#fff">
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, color: '#fff' }}>
               <StarIcon fontSize="small" color="warning" />
-              <Typography variant="body2" fontWeight={600}>{Number(m.vote_average || 0).toFixed(1)}</Typography>
+              <Typography variant="body2" sx={{ fontWeight: 600 }}>{Number(m.vote_average || 0).toFixed(1)}</Typography>
             </Box>
           </Box>
         </motion.div>
@@ -75,7 +75,7 @@ export default function Hero({ movies, loading, onTrailer }) {
           </Typography>
         </motion.div>
         <motion.div variants={textUp} initial="hidden" animate="show" custom={3}>
-          <Box display="flex" gap={1.5} mt={2.5}>
+          <Box sx={{ display: 'flex', gap: 1.5, mt: 2.5 }}>
             <motion.span whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.96 }}>
               <Button variant="contained" size="large" startIcon={<PlayArrowIcon />} onClick={() => onTrailer?.(m)}>Trailer</Button>
             </motion.span>
@@ -86,7 +86,7 @@ export default function Hero({ movies, loading, onTrailer }) {
             </motion.span>
           </Box>
         </motion.div>
-        <Box display="flex" gap={1} mt={3}>
+        <Box sx={{ display: 'flex', gap: 1, mt: 3 }}>
           {list.map((x, i) => (
             <Box key={x.id} onClick={() => setIdx(i)} sx={{
               width: i === idx % list.length ? 28 : 8, height: 8, borderRadius: 4, cursor: 'pointer',

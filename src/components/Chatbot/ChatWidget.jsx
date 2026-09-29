@@ -15,7 +15,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { understand, speak, detectLang } from '../../api/assistant';
+import { understand, speak } from '../../api/assistant';
 import { transcribeWithServer, transcribeWithBrowser, recordClip } from '../../api/voice';
 import { discoverMovies, IMAGE_BASE } from '../../api/tmdb';
 import { useMovies } from '../../context/MovieContext';
@@ -58,16 +58,13 @@ export default function ChatWidget() {
     if (recording || busy) return;
     setRecording(true);
     try {
-      // Prefer Speechmatics through the proxy; browser fallback otherwise.
+      // Speechmatics through the proxy first, browser mic as backup.
       let heard;
       try {
         const blob = await recordClip(7000);
         heard = await transcribeWithServer(blob);
       } catch {
         heard = await transcribeWithBrowser('en');
-        // retry Tamil/Sinhala quickly if the guess looks off — cheap trick,
-        // browser API needs the lang up front on some devices
-        if (!heard.text) heard = await transcribeWithBrowser('en');
       }
       setRecording(false);
       if (heard?.text) handleText(heard.text);
@@ -91,12 +88,12 @@ export default function ChatWidget() {
             style={{ position: 'fixed', bottom: 96, right: 16, zIndex: 1300, width: 'min(380px, calc(100vw - 32px))' }}>
             <Paper elevation={8} sx={{ borderRadius: 3, overflow: 'hidden', display: 'flex', flexDirection: 'column', height: 520, maxHeight: '70vh' }}>
               <Box sx={{ p: 1.75, background: (t) => t.palette.mode === 'dark' ? '#1a2030' : '#201410', color: '#fff' }}>
-                <Typography fontWeight={700}>🎬 CineMate</Typography>
+                <Typography sx={{ fontWeight: 700 }}>🎬 CineMate</Typography>
                 <Typography variant="caption" sx={{ opacity: 0.75 }}>Voice movie buddy • EN / සිං / தமிழ்</Typography>
               </Box>
               <Box sx={{ flexGrow: 1, overflowY: 'auto', p: 1.5, display: 'flex', flexDirection: 'column', gap: 1 }}>
                 {msgs.map((m, i) => (
-                  <Box key={i} alignSelf={m.from === 'user' ? 'flex-end' : 'flex-start'} sx={{ maxWidth: '88%' }}>
+                  <Box key={i} sx={{ alignSelf: m.from === 'user' ? 'flex-end' : 'flex-start', maxWidth: '88%' }}>
                     <Box sx={{
                       px: 1.5, py: 1, borderRadius: 2,
                       bgcolor: m.from === 'user' ? 'primary.main' : 'action.hover',
@@ -108,15 +105,15 @@ export default function ChatWidget() {
                       )}
                     </Box>
                     {m.movies?.length > 0 && (
-                      <Box display="flex" gap={1} mt={1} sx={{ overflowX: 'auto', pb: 0.5 }}>
+                      <Box sx={{ display: 'flex', gap: 1, mt: 1, overflowX: 'auto', pb: 0.5 }}>
                         {m.movies.map((mv) => (
                           <Card key={mv.id} sx={{ minWidth: 128, maxWidth: 128 }}>
                             <CardMedia component={Link} to={`/movie/${mv.id}`}
                               image={mv.poster_path ? (mv.poster_path.startsWith('http') ? mv.poster_path : `${IMAGE_BASE}${mv.poster_path}`) : ''}
                               alt={mv.title} sx={{ aspectRatio: '2/3' }} />
                             <CardContent sx={{ p: 1 }}>
-                              <Typography variant="caption" noWrap fontWeight={600}>{mv.title}</Typography>
-                              <Box display="flex" justifyContent="space-between" alignItems="center">
+                              <Typography variant="caption" noWrap sx={{ fontWeight: 600 }}>{mv.title}</Typography>
+                              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                 <Typography variant="caption" color="text.secondary">★ {Number(mv.vote_average || 0).toFixed(1)}</Typography>
                                 <Box>
                                   <IconButton size="small" onClick={() => toggleFavorite(mv)} aria-label="save"><FavoriteBorderIcon fontSize="inherit" /></IconButton>
@@ -153,5 +150,3 @@ export default function ChatWidget() {
     </>
   );
 }
-
-export { detectLang as _chatLang };

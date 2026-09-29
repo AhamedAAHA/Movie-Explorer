@@ -9,7 +9,7 @@ import MovieCard from './MovieCard';
 
 export function SectionTitle({ kicker, title }) {
   return (
-    <Box mb={1.5} display="flex" alignItems="center" gap={1.25}>
+    <Box sx={{ mb: 1.5, display: 'flex', alignItems: 'center', gap: 1.25 }}>
       <motion.span
         initial={{ scaleY: 0 }}
         whileInView={{ scaleY: 1 }}
@@ -18,8 +18,8 @@ export function SectionTitle({ kicker, title }) {
         style={{ width: 5, height: 30, borderRadius: 3, background: 'linear-gradient(180deg,#e8b34b,#b3261e)', display: 'inline-block' }}
       />
       <Box>
-        <Typography variant="overline" color="primary" fontWeight={700} lineHeight={1}>{kicker}</Typography>
-        <Typography variant="h5" lineHeight={1.2}>{title}</Typography>
+        <Typography variant="overline" color="primary" sx={{ fontWeight: 700, lineHeight: 1 }}>{kicker}</Typography>
+        <Typography variant="h5" sx={{ lineHeight: 1.2 }}>{title}</Typography>
       </Box>
     </Box>
   );
@@ -47,7 +47,7 @@ export default function TrendingRow({ movies, loading }) {
 
   if (loading) {
     return (
-      <Box display="flex" gap={2} sx={{ overflow: 'hidden' }}>
+      <Box sx={{ display: 'flex', gap: 2, overflow: 'hidden' }}>
         {Array.from({ length: 6 }).map((_, i) => (
           <Skeleton key={i} variant="rounded" width={170} height={290} sx={{ borderRadius: 3, flexShrink: 0 }} />
         ))}
@@ -61,8 +61,8 @@ export default function TrendingRow({ movies, loading }) {
       <Box
         ref={rail}
         onScroll={track}
-        display="flex" gap={2}
         sx={{
+          display: 'flex', gap: 2,
           overflowX: 'auto', scrollSnapType: 'x mandatory', py: 1, px: 0.5,
           scrollbarWidth: 'none', '&::-webkit-scrollbar': { display: 'none' },
           // faded edges so the rail feels endless

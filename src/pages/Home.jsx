@@ -1,7 +1,7 @@
 // Home: hero + trending rail + discover grid. Infinite scroll
 // stays, Load More button stays as backup, skeletons while fetching.
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Container, Alert, Button, Box, Divider } from '@mui/material';
+import { Container, Alert, Button, Box, Divider, Typography } from '@mui/material';
 import SearchBar from '../components/SearchBar';
 import FilterBar from '../components/FilterBar';
 import MovieGrid, { GridSkeleton } from '../components/MovieGrid';
@@ -83,14 +83,14 @@ export default function Home() {
       <SearchBar />
       <FilterBar />
       {error && <Alert severity="error" sx={{ mt: 2 }}>{error}</Alert>}
-      <Box mt={2}>
+      <Box sx={{ mt: 2 }}>
         {loading && movies.length === 0 ? <GridSkeleton /> : <MovieGrid movies={movies} />}
       </Box>
       {!loading && movies.length === 0 && !error && (
-        <Box color="text.secondary" mt={2}>Nothing here yet. Try another search or clear the filters.</Box>
+        <Typography color="text.secondary" sx={{ mt: 2 }}>Nothing here yet. Try another search or clear the filters.</Typography>
       )}
       {hasMore && !loading && (
-        <Box display="flex" justifyContent="center" my={3}>
+        <Box sx={{ display: 'flex', justifyContent: 'center', my: 3 }}>
           <Button variant="contained" size="large" onClick={() => load(page + 1, true)}>Load more</Button>
         </Box>
       )}

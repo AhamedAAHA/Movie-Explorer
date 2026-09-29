@@ -24,7 +24,7 @@ export default function MovieGrid({ movies }) {
         <Grid key={m.id} size={{ xs: 6, sm: 4, md: 3, lg: 2 }}>
           <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }}
             transition={{ delay: Math.min(i * 0.04, 0.5), duration: 0.35 }}>
-            <Box height="100%"><MovieCard movie={m} /></Box>
+            <Box sx={{ height: '100%' }}><MovieCard movie={m} /></Box>
           </motion.div>
         </Grid>
       ))}

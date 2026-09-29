@@ -56,23 +56,23 @@ export default function MovieDetails() {
             </Grid>
             <Grid size={{ xs: 12, sm: 8, md: 9 }}>
               <Typography variant="h4">{movie.title}</Typography>
-              {movie.tagline && <Typography color="text.secondary" fontStyle="italic">“{movie.tagline}”</Typography>}
-              <Box display="flex" alignItems="center" gap={1} my={1} flexWrap="wrap">
-                <StarIcon color="warning" /><Typography fontWeight={600}>{Number(movie.vote_average || 0).toFixed(1)} / 10</Typography>
+              {movie.tagline && <Typography color="text.secondary" sx={{ fontStyle: 'italic' }}>“{movie.tagline}”</Typography>}
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, my: 1, flexWrap: 'wrap' }}>
+                <StarIcon color="warning" /><Typography sx={{ fontWeight: 600 }}>{Number(movie.vote_average || 0).toFixed(1)} / 10</Typography>
                 <Typography color="text.secondary">• {(movie.release_date || '').slice(0, 4)} {movie.runtime ? `• ${movie.runtime} min` : ''}</Typography>
               </Box>
-              <Box display="flex" gap={1} flexWrap="wrap" my={1}>
+              <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', my: 1 }}>
                 {(movie.genres || []).map((g) => <Chip key={g.id} label={g.name} color="primary" variant="outlined" />)}
               </Box>
-              <Typography variant="h6" mt={2}>Overview</Typography>
+              <Typography variant="h6" sx={{ mt: 2 }}>Overview</Typography>
               <Typography color="text.secondary">{movie.overview || 'No overview available.'}</Typography>
               {cast.length > 0 && (
                 <>
-                  <Typography variant="h6" mt={2}>Top cast</Typography>
+                  <Typography variant="h6" sx={{ mt: 2 }}>Top cast</Typography>
                   <Typography color="text.secondary">{cast.map((c) => `${c.name} (${c.character})`).join(' • ')}</Typography>
                 </>
               )}
-              <Box display="flex" gap={2} mt={3} flexWrap="wrap">
+              <Box sx={{ display: 'flex', gap: 2, mt: 3, flexWrap: 'wrap' }}>
                 <Button variant="contained" size="large" startIcon={<PlayArrowIcon />} onClick={() => setTrailerOpen(true)} disabled={!trailerKey}>
                   Watch trailer
                 </Button>

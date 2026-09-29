@@ -89,7 +89,7 @@ export default function Login() {
           {/* gold hairline on top */}
           <Box sx={{ height: 4, background: 'linear-gradient(90deg,#7c5cff,#e8b34b,#b3261e)' }} />
           <CardContent sx={{ p: { xs: 3, sm: 4 } }}>
-            <Box display="flex" alignItems="center" gap={1.5} mb={1}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1 }}>
               <Box sx={{
                 width: 46, height: 46, borderRadius: 3, display: 'flex', alignItems: 'center', justifyContent: 'center',
                 background: 'linear-gradient(135deg,#e8b34b,#b3261e)', boxShadow: '0 8px 22px rgba(232,179,75,0.4)',
@@ -97,7 +97,7 @@ export default function Login() {
                 <MovieIcon sx={{ color: '#fff' }} />
               </Box>
               <Box>
-                <Typography variant="h6" lineHeight={1.1}>{tab === 0 ? 'Welcome back' : 'Join the show'}</Typography>
+                <Typography variant="h6" sx={{ lineHeight: 1.1 }}>{tab === 0 ? 'Welcome back' : 'Join the show'}</Typography>
                 <Typography variant="caption" color="text.secondary">
                   {tab === 0 ? 'Pick up right where you left off.' : 'One account, endless movies.'}
                 </Typography>
@@ -128,11 +128,11 @@ export default function Login() {
               )}
             </AnimatePresence>
 
-            <Box component="form" onSubmit={submit} display="flex" flexDirection="column" gap={2}>
-              <TextField label="Email" type="email" required value={email} onChange={(e) => setEmail(e.target.value)}
+            <Box component="form" onSubmit={submit} sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+              <TextField fullWidth label="Email" type="email" required value={email} onChange={(e) => setEmail(e.target.value)}
                 InputProps={{ startAdornment: <InputAdornment position="start"><MailOutlinedIcon fontSize="small" /></InputAdornment> }}
                 sx={{ '& .MuiOutlinedInput-root': { borderRadius: 2.5 } }} />
-              <TextField label="Password" type={showPw ? 'text' : 'password'} required value={password}
+              <TextField fullWidth label="Password" type={showPw ? 'text' : 'password'} required value={password}
                 onChange={(e) => setPassword(e.target.value)} helperText="At least 6 characters"
                 InputProps={{
                   startAdornment: <InputAdornment position="start"><LockOutlinedIcon fontSize="small" /></InputAdornment>,
@@ -156,8 +156,8 @@ export default function Login() {
                 </Button>
               </motion.span>
             </Box>
-            <Typography variant="caption" color="text.secondary" display="block" textAlign="center" mt={2.5}>
-              Tip: after logging in, ask CineMate 🎬 for picks in English, සිංහල or தமிழ்.
+            <Typography variant="caption" color="text.secondary" sx={{ display: 'block', textAlign: 'center', mt: 2.5 }}>
+              Tip: after logging in, ask CineMate for picks in English, සිංහල or தமிழ்.
             </Typography>
           </CardContent>
         </Card>

@@ -50,7 +50,7 @@ export default function App() {
           <BrowserRouter>
             <Box sx={{ position: 'relative', zIndex: 1, minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
               <Navbar mode={mode} onToggleMode={() => setMode((m) => (m === 'light' ? 'dark' : 'light'))} />
-              <Box flexGrow={1}>
+              <Box sx={{ flexGrow: 1 }}>
                 <FadingRoutes />
               </Box>
               <Footer />

@@ -1,11 +1,24 @@
-// Voice input: records a clip, tries Speechmatics through the server
-// proxy, drops back to the browser Web Speech API when keys are missing.
+// Voice input: records a clip, sends it to the server proxy as
+// base64 (plain JSON, works on serverless), otherwise the browser
+// Web Speech API takes over when keys are missing.
 import { LANGS } from './assistant';
 
-export async function transcribeWithServer(blob) {
-  const fd = new FormData();
-  fd.append('audio', blob, 'clip.webm');
-  const r = await fetch('/api/transcribe', { method: 'POST', body: fd });
+function blobToBase64(blob) {
+  return new Promise((resolve, reject) => {
+    const r = new FileReader();
+    r.onload = () => resolve(String(r.result).split(',')[1]);
+    r.onerror = reject;
+    r.readAsDataURL(blob);
+  });
+}
+
+export async function transcribeWithServer(blob, langHint = 'en') {
+  const audioBase64 = await blobToBase64(blob);
+  const r = await fetch('/api/transcribe', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ audioBase64, langHint }),
+  });
   if (!r.ok) throw new Error('server transcribe failed');
   return r.json(); // { text, lang }
 }
@@ -29,7 +42,8 @@ export function recordClip(ms = 8000) {
   return new Promise(async (resolve, reject) => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      const rec = new MediaRecorder(stream);
+      const mime = MediaRecorder.isTypeSupported('audio/webm') ? 'audio/webm' : undefined;
+      const rec = new MediaRecorder(stream, mime ? { mimeType: mime } : undefined);
       const chunks = [];
       rec.ondataavailable = (e) => chunks.push(e.data);
       rec.onstop = () => {

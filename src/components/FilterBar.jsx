@@ -10,7 +10,7 @@ export default function FilterBar() {
   useEffect(() => { fetchGenres().then(setGenres).catch(() => {}); }, []);
 
   return (
-    <Box display="flex" gap={2} flexWrap="wrap" mt={2}>
+    <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', mt: 2 }}>
       <FormControl size="small" sx={{ minWidth: 140 }}>
         <InputLabel>Genre</InputLabel>
         <Select value={filters.genre} label="Genre" onChange={(e) => setFilters({ ...filters, genre: e.target.value })}>
