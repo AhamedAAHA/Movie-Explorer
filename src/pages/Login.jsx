@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { Card, CardContent, Typography, TextField, Button, Alert, Box, useTheme, InputAdornment, IconButton } from '@mui/material';
 import { motion, AnimatePresence } from 'framer-motion';
 import MovieIcon from '@mui/icons-material/Movie';
-import MailOutlineIcon from '@mui/icons-material/MailOutline';
+import MailOutlinedIcon from '@mui/icons-material/MailOutlined';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
@@ -130,7 +130,7 @@ export default function Login() {
 
             <Box component="form" onSubmit={submit} display="flex" flexDirection="column" gap={2}>
               <TextField label="Email" type="email" required value={email} onChange={(e) => setEmail(e.target.value)}
-                InputProps={{ startAdornment: <InputAdornment position="start"><MailOutlineIcon fontSize="small" /></InputAdornment> }}
+                InputProps={{ startAdornment: <InputAdornment position="start"><MailOutlinedIcon fontSize="small" /></InputAdornment> }}
                 sx={{ '& .MuiOutlinedInput-root': { borderRadius: 2.5 } }} />
               <TextField label="Password" type={showPw ? 'text' : 'password'} required value={password}
                 onChange={(e) => setPassword(e.target.value)} helperText="At least 6 characters"
